@@ -9,8 +9,12 @@
 #import "TimelineViewController.h"
 #import "APIManager.h"
 #import "TweetCell.h"
-#import "UIIMageView+AFNetworking.h"
+#import "UIImageView+AFNetworking.h"
 #import "ComposeViewController.h"
+#import "LoginViewController.h"
+#import "AppDelegate.h"
+#import "Tweet.h"
+#import "DetailsViewController.h"
 
 @interface TimelineViewController () <ComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -61,15 +65,18 @@
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier: @"TweetCell"];
     
     Tweet *tweet = self.tweetArray[indexPath.row];
+    cell.tweet = tweet;
     cell.tweetLabel.text = tweet.text;
-    cell.favoriteCountLabel.text = [NSString stringWithFormat:@"%", tweet.favoriteCount];
-    cell.retweetCountLabel.text = [NSString stringWithFormat:@"%", tweet.retweetCount];
+    cell.favoriteCountLabel.text = [NSString stringWithFormat:@"%d", tweet.favoriteCount];
+    cell.retweetCountLabel.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
     cell.createdDateLabel.text = tweet.createdAtString;
     cell.userNameLabel.text = tweet.user.name;
     cell.userScreenNameLabel.text = [NSString stringWithFormat:@"@%@",tweet.user.screenName];
     NSURL *profilePicURL = [NSURL URLWithString:tweet.user.profilePic];
     cell.profileImageView.image= nil;
     [cell.profileImageView setImageWithURL: profilePicURL];
+    cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.size.width/2;
+    cell.profileImageView.clipsToBounds = YES;
     return cell;
 }
 
@@ -77,16 +84,35 @@
     [self.tweetArray addObject:tweet];
     [self.tableView reloadData];
 }
+- (IBAction)logoutButtonPressed:(id)sender {
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    appDelegate.window.rootViewController = loginViewController;
+    [[APIManager shared] logout];
+}
+
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    UINavigationController *navigationController = [segue destinationViewController];
-    ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
-    composeController.delegate = self;
+    if ([segue.identifier isEqualToString:@"toTweetDetail"]){
+        UITableViewCell *tappedCell =sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+        Tweet *tweet = self.tweetArray[indexPath.row];
+        DetailsViewController *detailsViewController =  [segue destinationViewController];
+        detailsViewController.tweet = tweet;
+    } else {
+        UINavigationController *navigationController = [segue destinationViewController];
+        ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
+        composeController.delegate = self;
+    }
 }
+
 
 
 

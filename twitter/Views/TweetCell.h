@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *retweetCountLabel;
 @property (weak, nonatomic) IBOutlet UIButton *favoritedButton;
 @property (weak, nonatomic) IBOutlet UILabel *favoriteCountLabel;
-
+- (IBAction)didTapLike:(id)sender;
 @end
 
 NS_ASSUME_NONNULL_END
