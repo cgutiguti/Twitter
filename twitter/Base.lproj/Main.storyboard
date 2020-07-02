@@ -282,6 +282,7 @@
                                     <constraint firstAttribute="height" constant="30" id="pSc-DQ-MJf"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="retweet-icon-1"/>
+                                <state key="selected" image="retweet-icon-green-1"/>
                                 <connections>
                                     <action selector="didTapRetweet:" destination="wSw-9n-Unp" eventType="touchUpInside" id="Osw-oh-nov"/>
                                 </connections>
@@ -293,8 +294,21 @@
                                     <constraint firstAttribute="height" constant="30" id="afs-Wc-M82"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="favor-icon-1"/>
+                                <state key="selected" image="favor-icon-red-1"/>
                                 <connections>
                                     <action selector="didTapLike:" destination="wSw-9n-Unp" eventType="touchUpInside" id="THN-9I-qBk"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fmm-eK-l0m">
+                                <rect key="frame" x="95" y="679" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="fQ4-pw-RNG"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="reply-icon-1"/>
+                                <state key="selected" image=" "/>
+                                <connections>
+                                    <action selector="didTapRetweet:" destination="wSw-9n-Unp" eventType="touchUpInside" id="OR0-su-NSq"/>
+                                    <segue destination="VuW-pz-y5N" kind="presentation" id="hWv-1C-GNv"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -312,14 +326,17 @@
                             <constraint firstItem="kyR-jW-wjb" firstAttribute="leading" secondItem="gMd-BM-0im" secondAttribute="trailing" constant="8" id="Cpw-WK-mAw"/>
                             <constraint firstItem="KEX-uv-ehk" firstAttribute="top" secondItem="yxz-yO-u0a" secondAttribute="top" constant="18" id="EQQ-lf-6cS"/>
                             <constraint firstItem="CHw-QL-wf4" firstAttribute="leading" secondItem="yxz-yO-u0a" secondAttribute="leading" constant="16" id="KM5-2z-MH6"/>
+                            <constraint firstItem="twd-7o-s4i" firstAttribute="leading" secondItem="fmm-eK-l0m" secondAttribute="trailing" constant="39" id="Np8-ik-fKV"/>
                             <constraint firstItem="yxz-yO-u0a" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="kyR-jW-wjb" secondAttribute="bottom" constant="15" id="O9G-Yz-hNA"/>
                             <constraint firstItem="MZV-M5-xdy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7zp-Oe-WSD" secondAttribute="trailing" constant="5" id="PKb-p6-gnm"/>
                             <constraint firstItem="gMd-BM-0im" firstAttribute="leading" secondItem="twd-7o-s4i" secondAttribute="trailing" constant="8" id="QGm-Zd-wX4"/>
                             <constraint firstItem="gMd-BM-0im" firstAttribute="top" secondItem="twd-7o-s4i" secondAttribute="top" id="Ukw-uC-4PS"/>
+                            <constraint firstItem="twd-7o-s4i" firstAttribute="top" secondItem="fmm-eK-l0m" secondAttribute="top" id="XFI-gW-h5p"/>
                             <constraint firstItem="yxz-yO-u0a" firstAttribute="trailing" secondItem="Er6-YS-wVJ" secondAttribute="trailing" constant="8" id="aOH-Tm-uPJ"/>
                             <constraint firstItem="kyR-jW-wjb" firstAttribute="bottom" secondItem="twd-7o-s4i" secondAttribute="bottom" id="cjp-it-gj4"/>
                             <constraint firstItem="kyR-jW-wjb" firstAttribute="leading" secondItem="twd-7o-s4i" secondAttribute="trailing" constant="75" id="jNq-qE-4iO"/>
                             <constraint firstItem="Er6-YS-wVJ" firstAttribute="top" secondItem="twd-7o-s4i" secondAttribute="top" id="jSA-X5-qiW"/>
+                            <constraint firstItem="twd-7o-s4i" firstAttribute="bottom" secondItem="fmm-eK-l0m" secondAttribute="bottom" id="m1S-dL-Sw3"/>
                             <constraint firstItem="yxz-yO-u0a" firstAttribute="trailing" secondItem="pi8-gQ-VWf" secondAttribute="trailing" constant="25" id="pLi-jZ-whN"/>
                             <constraint firstItem="pi8-gQ-VWf" firstAttribute="leading" secondItem="CHw-QL-wf4" secondAttribute="trailing" constant="23" id="phi-J9-RS8"/>
                             <constraint firstItem="pi8-gQ-VWf" firstAttribute="top" secondItem="KEX-uv-ehk" secondAttribute="bottom" constant="4" id="uAd-01-Asg"/>
@@ -336,6 +353,7 @@
                         <outlet property="favoriteButton" destination="kyR-jW-wjb" id="Fgv-G7-5xf"/>
                         <outlet property="favoriteCountLabel" destination="Er6-YS-wVJ" id="99Q-pX-o88"/>
                         <outlet property="profilePicView" destination="CHw-QL-wf4" id="L6e-9j-kMj"/>
+                        <outlet property="replyButton" destination="fmm-eK-l0m" id="d4n-pc-BsI"/>
                         <outlet property="retweetButton" destination="twd-7o-s4i" id="fCU-kQ-IcL"/>
                         <outlet property="retweetCountLabel" destination="gMd-BM-0im" id="I1R-td-j8F"/>
                         <outlet property="textLabel" destination="pi8-gQ-VWf" id="5GI-NM-5SV"/>
@@ -432,12 +450,17 @@
             <point key="canvasLocation" x="2502" y="37"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="hWv-1C-GNv"/>
+    </inferredMetricsTieBreakers>
     <resources>
+        <image name=" " width="128" height="128"/>
         <image name="TwitterLogoBlue" width="133.33332824707031" height="133.33332824707031"/>
         <image name="close-icon" width="26" height="24"/>
         <image name="edit-icon" width="30" height="27"/>
         <image name="favor-icon-1" width="30" height="30"/>
         <image name="favor-icon-red-1" width="30" height="30"/>
+        <image name="reply-icon-1" width="30" height="30"/>
         <image name="retweet-icon-1" width="30" height="30"/>
         <image name="retweet-icon-green-1" width="30" height="30"/>
     </resources>

@@ -12,6 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Tweet : NSObject
+@property (nonatomic) NSNumber *id;
 @property (nonatomic, strong) NSString *idStr; // For favoriting, retweeting & replying
 @property (nonatomic, strong) NSString *text; // Text content of tweet
 @property (nonatomic) int favoriteCount; // Update favorite count label

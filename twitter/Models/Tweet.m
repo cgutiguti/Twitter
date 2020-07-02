@@ -24,6 +24,7 @@
             dictionary = originalTweet;
         }
         self.idStr = dictionary[@"id_str"];
+        self.id = @([dictionary[@"id"] intValue]);
         self.text = dictionary[@"text"];
         self.favoriteCount = [dictionary[@"favorite_count"] intValue];
         self.favorited = [dictionary[@"favorited"] boolValue];

@@ -61,16 +61,28 @@ static NSString * const consumerSecret = @"s5ynGqXzstUZwFPxVyMDkYh197qvHOcVM3kwv
         }];
 }
 
-- (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion{
-    NSString *urlString = @"1.1/statuses/update.json";
-    NSDictionary *parameters = @{@"status": text};
-    
-    [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
-        Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
-        completion(tweet, nil);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        completion(nil, error);
-    }];
+- (void)postStatusWithText:(NSString *)text replyID:(NSString *)replyID completion:(void (^)(Tweet *, NSError *))completion{
+    if(replyID) {
+        NSString *urlString = @"1.1/statuses/update.json";
+        NSDictionary *parameters = @{@"status": text, @"in_reply_to_status_id": replyID};
+        
+        [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
+            Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
+            completion(tweet, nil);
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            completion(nil, error);
+        }];
+    } else {
+        NSString *urlString = @"1.1/statuses/update.json";
+        NSDictionary *parameters = @{@"status": text};
+        
+        [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
+            Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
+            completion(tweet, nil);
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            completion(nil, error);
+        }];
+    }
 }
 
 - (void)favorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{

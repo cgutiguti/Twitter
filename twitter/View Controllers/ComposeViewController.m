@@ -18,6 +18,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.replyTweet) {
+        self.tweetCompositionView.text = [NSString stringWithFormat:@"@%@",self.replyTweet.user.screenName];
+    } 
     // Do any additional setup after loading the view.
 }
 
@@ -31,15 +34,28 @@
 }
 */
 - (IBAction)sendTweet:(id)sender {
-    [[APIManager shared] postStatusWithText:self.tweetCompositionView.text completion:^(Tweet *tweet, NSError *error) {
-        if(tweet){
-            [self dismissViewControllerAnimated:true completion:nil];
-            NSLog(@"😎😎😎 Successfully loaded home timeline");
-            [self.delegate didTweet:tweet];
-        } else {
-            NSLog(@"😫😫😫 Error posting tweet: %@", error.localizedDescription);
-        }
-    }];
+    if(self.replyTweet) {
+        [[APIManager shared] postStatusWithText:self.tweetCompositionView.text replyID:self.replyTweet.idStr completion:^(Tweet *tweet, NSError *error) {
+            if(tweet){
+                [self dismissViewControllerAnimated:true completion:nil];
+                NSLog(@"😎😎😎 Successfully loaded home timeline");
+                [self.delegate didTweet:tweet];
+            } else {
+                NSLog(@"😫😫😫 Error posting tweet: %@", error.localizedDescription);
+            }
+        }];
+    } else {
+        [[APIManager shared] postStatusWithText:self.tweetCompositionView.text replyID:nil completion:^(Tweet *tweet, NSError *error) {
+            if(tweet){
+                [self dismissViewControllerAnimated:true completion:nil];
+                NSLog(@"😎😎😎 Successfully loaded home timeline");
+                [self.delegate didTweet:tweet];
+            } else {
+                NSLog(@"😫😫😫 Error posting tweet: %@", error.localizedDescription);
+            }
+        }];
+    }
+    
 }
 - (IBAction)closeComposition:(id)sender {
     [self dismissViewControllerAnimated:true completion:nil];

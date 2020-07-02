@@ -26,6 +26,12 @@
     self.tweetLabel.text = self.tweet.text;
     self.favoriteCountLabel.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
     self.retweetCountLabel.text = [NSString stringWithFormat:@"%d", self.tweet.retweetCount];
+    if (self.tweet.favorited) {
+        [self.favoritedButton setSelected:YES];
+    }
+    if(self.tweet.retweeted) {
+        [self.retweetedButton setSelected:YES];
+    }
     self.createdDateLabel.text = self.tweet.createdAtString;
     self.userNameLabel.text = self.tweet.user.name;
     self.userScreenNameLabel.text = [NSString stringWithFormat:@"@%@",self.tweet.user.screenName];
@@ -37,15 +43,15 @@
 }
 - (IBAction)didTapLike:(id)sender {
     if (!self.tweet.favorited) {
-        self.tweet.favorited = YES;
-        self.tweet.favoriteCount += 1;
-        [self.favoritedButton setHighlighted:YES];
         [[APIManager shared] favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
             if(error){
                  NSLog(@"Error favoriting tweet: %@", error.localizedDescription);
             }
             else{
                 NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
+                self.tweet.favorited = YES;
+                self.tweet.favoriteCount += 1;
+                [self.favoritedButton setSelected:YES];
             }
         }];
         [self reloadData];
@@ -53,15 +59,15 @@
 }
 - (IBAction)didTapRetweet:(id)sender {
     if (!self.tweet.retweeted) {
-        self.tweet.retweeted = YES;
-        self.tweet.retweetCount += 1;
-        [self.retweetedButton setHighlighted:YES];
         [[APIManager shared] retweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
             if(error){
                  NSLog(@"Error retweeting tweet: %@", error.localizedDescription);
             }
             else{
                 NSLog(@"Successfully retweeted the following Tweet: %@", tweet.text);
+                self.tweet.retweeted = YES;
+                self.tweet.retweetCount += 1;
+                [self.retweetedButton setSelected:YES];
             }
         }];
         [self reloadData];

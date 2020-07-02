@@ -68,6 +68,12 @@
     cell.tweet = tweet;
     cell.tweetLabel.text = tweet.text;
     cell.favoriteCountLabel.text = [NSString stringWithFormat:@"%d", tweet.favoriteCount];
+    if (cell.tweet.favorited) {
+        [cell.favoritedButton setSelected:YES];
+    }
+    if(cell.tweet.retweeted) {
+        [cell.retweetedButton setSelected:YES];
+    }
     cell.retweetCountLabel.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
     cell.createdDateLabel.text = tweet.createdAtString;
     cell.userNameLabel.text = tweet.user.name;
