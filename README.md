@@ -46,8 +46,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. I would like to further understand infinite scrolling, since it was an optional feature that I didn't have enough time to implement for Twitter. 
+2. At some point I would like to implement the profile page with timeline. 
 
 ## Video Walkthrough
 
@@ -61,6 +61,7 @@ GIF created with [RecordIt](http://www.recordit.co).
 ## Notes
 
 Describe any challenges encountered while building the app.
+I struggled when creating the reply button initially, because it had to pass data back and forth between view controllers and also include the @screenName in the tweet in order to trigger the Twitter reply API. 
 
 ## Credits
 
